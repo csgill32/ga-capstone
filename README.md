@@ -20,3 +20,6 @@ Technology:
 - Backend: Node & Express
 - Frontend: React
 - Sass?
+
+Design:
+![Design Image](/planning/figma-design.jpeg)

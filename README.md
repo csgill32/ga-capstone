@@ -25,10 +25,10 @@ Design:
 ![Design Image](/planning/figma-design.jpeg)
 
 Wireframes:
-![Design Image](/planning/all-recipes.pdf)
+![All Recipes](/planning/all-recipes.png)
 
-![Design Image](/planning/create-recipe.pdf)
+![Create Recipe](/planning/create-recipe.png)
 
-![Design Image](/planning/recipe-show-page.pdf)
+![Show Page](/planning/recipe-show-page.png)
 
-![Design Image](/planning/search.pdf)
+![Search Page](/planning/search.png)

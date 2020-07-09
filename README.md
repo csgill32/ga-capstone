@@ -34,4 +34,4 @@ Wireframes:
 ![Search Page](/planning/search.png)
 
 ERD:
-![ERD](/planning/erd.drawio)
+![ERD](/planning/erd.png)

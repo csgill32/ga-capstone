@@ -32,3 +32,6 @@ Wireframes:
 ![Show Page](/planning/recipe-show-page.png)
 
 ![Search Page](/planning/search.png)
+
+ERD:
+![ERD](/planning/erd.drawio)

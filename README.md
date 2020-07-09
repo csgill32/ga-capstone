@@ -23,3 +23,12 @@ Technology:
 
 Design:
 ![Design Image](/planning/figma-design.jpeg)
+
+Wireframes:
+![Design Image](/planning/all-recipes.pdf)
+
+![Design Image](/planning/create-recipe.pdf)
+
+![Design Image](/planning/recipe-show-page.pdf)
+
+![Design Image](/planning/search.pdf)

@@ -8,6 +8,7 @@ router.post('/', ctrl.recipes.create)
 router.put('/:id', ctrl.recipes.update)
 router.delete('/:id', ctrl.recipes.destroy)
 router.post('/:id/ingredients', ctrl.recipes.ingredients)
+router.delete('/:id/ingredients/:ingredientId', ctrl.recipes.destroyIngredient)
 
 // exports
 module.exports = router

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const Recipe = require('./Recipe')
+const Recipe = require('./Recipe')
 
 const userSchema = new mongoose.Schema({
     email: {

@@ -5,10 +5,10 @@ const recipeSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
         directions: { type: String },
-        // user: {
-        //     type: mongoose.Schema.Types.ObjectId,
-        //     ref: "User",
-        // },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
         ingredients: [Ingredient.schema],
     },
     { timestamps: true }

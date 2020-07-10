@@ -1,38 +1,43 @@
 const db = require('../models')
 
 const index = (req, res) => {
-    db.Recipe.find({}, (err, foundRecipes) => {
+    db.Recipe.find({ user: req.session.currentUser.id }, (err, foundRecipes) => {
         if (err) console.log('Error in Recipe Index:', err)
 
         if (!foundRecipes) return res.json({
             message: 'No recipes found in database.'
         })
 
-        res.status(200).json({ recipes: foundRecipes });
+        res.status(200).json({ recipes: foundRecipes, user: req.session.currentUser });
     })
 }
 
 const show = (req, res) => {
-    db.Recipe.findById(req.params.id, (err, foundRecipe) => {
+    db.Recipe.findById(req.params.id).populate("user").exec(function (err, foundRecipe) {
         if (err) console.log('Error in Recipe Show:', err)
 
         if (!foundRecipe) return res.json({
             message: 'Recipe with provided ID not found.'
         })
 
-        res.status(200).json({ recipe: foundRecipe })
+        res.status(200).json({ recipe: foundRecipe, user: req.session.currentUser })
     })
 }
 
 const create = (req, res) => {
-    db.Recipe.create(req.body, (err, savedRecipe) => {
+    const recipe = {
+        name: req.body.name,
+        directions: req.body.directions,
+        user: req.session.currentUser.id,
+    }
+    db.Recipe.create(recipe, (err, savedRecipe) => {
         if (err) console.log('Error in Recipe Create:', err)
 
         if (!savedRecipe) return res.json({
             message: 'Error occurred while creating recipe.'
         })
 
-        res.status(200).json({ recipe: savedRecipe })
+        res.status(200).json({ recipe: savedRecipe, user: req.session.currentUser })
     })
 }
 
@@ -71,7 +76,6 @@ const ingredients = async (req, res) => {
                     name: req.body.name,
                     quantity: req.body.quantity,
                     measurement: req.body.measurement,
-                    // user: req.session.currentUser.id,
                 },
             },
         };
@@ -87,7 +91,22 @@ const ingredients = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
-        return res.json({ message: "Error adding ingredient" })
+        return res.json({ message: "Unable to add ingredient" })
+    }
+}
+
+const destroyIngredient = async (req, res) => {
+    try {
+        const foundRecipe = await db.Recipe.findById(req.params.id);
+        foundRecipe.ingredients.remove(req.params.ingredientId);
+        await foundRecipe.save();
+        res.status(200).json({
+            status: 200,
+            message: "Ingredient Sucessfully Deleted",
+        })
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Unable to delete ingredient" });
     }
 }
 
@@ -97,5 +116,6 @@ module.exports = {
     create,
     update,
     destroy,
-    ingredients
+    ingredients,
+    destroyIngredient
 }

@@ -76,9 +76,37 @@ const profile = async (req, res) => {
     }
 };
 
+// embedding recipes
+// const recipes = async (req, res) => {
+//     try {
+//         const updateData = {
+//             $push: {
+//                 recipes: {
+//                     name: req.body.name,
+//                     directions: req.body.quantity,
+//                     user: req.session.currentUser.id,
+//                 },
+//             },
+//         };
+//         const updatedUser = await db.User.findByIdAndUpdate(
+//             req.params.id,
+//             updateData,
+//             { new: true }
+//         );
+//         console.log(updatedUser);
+//         res.status(200).json({
+//             status: 200,
+//             message: "Recipe Successfully Added",
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         return res.json({ message: "Error adding recipe" })
+//     }
+// }
 
 module.exports = {
     register,
     login,
     profile,
+    //     recipes
 };

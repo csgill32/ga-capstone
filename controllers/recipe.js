@@ -67,6 +67,26 @@ const destroy = (req, res) => {
         res.status(200).json({ recipe: deletedRecipe })
     })
 }
+
+// // Search 
+// const search = (req, res) => {
+//     db.Recipe.find({ name: { $regex: req.query.name, $options: "i" } }, function (error, foundRecipes) {
+//         if (error) {
+//             console.log(error);
+//             res.send({ message: "Internal server error." });
+//         } else {
+//             db.Ingredient.find({ name: { $regex: req.query.name, $options: "i" } }).populate("recipe").exec(function (error, foundIngredients) {
+//                 console.log(foundIngredients);
+//                 for (let i = 0; i < foundIngredients.length; i++) {
+//                     foundRecipes.push(foundIngredients[i].recipe);
+//                 }
+//                 const context = { recipes: foundRecipes, user: req.session.currentUser }
+//                 res.render("recipes/search", context);
+//             })
+//         }
+//     });
+// };
+
 // embedding ingredients
 const ingredients = async (req, res) => {
     try {
@@ -95,6 +115,26 @@ const ingredients = async (req, res) => {
     }
 }
 
+const updateIngredient = async (req, res) => {
+    try {
+        const foundRecipe = await db.Recipe.findById(req.params.id);
+        let ingredientIndex = foundRecipe.ingredients.findIndex(i => i._id == req.params.ingredientId);
+        let ingredient = foundRecipe.ingredients[ingredientIndex]
+        foundRecipe.ingredients[ingredientIndex] = { ...ingredient, ...req.body }
+        console.log(ingredientIndex);
+
+        // foundRecipe.ingredients.findByIdAndUpdate(req.params.ingredientId, req.body, { new: true });
+        await foundRecipe.save()
+        res.status(200).json({
+            status: 200,
+            message: "Ingredient Sucessfully Updated",
+        })
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Unable to edit ingredient" });
+    }
+}
+
 const destroyIngredient = async (req, res) => {
     try {
         const foundRecipe = await db.Recipe.findById(req.params.id);
@@ -116,6 +156,8 @@ module.exports = {
     create,
     update,
     destroy,
+    // search,
     ingredients,
+    updateIngredient,
     destroyIngredient
 }

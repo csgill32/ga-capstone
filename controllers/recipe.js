@@ -13,7 +13,7 @@ const index = (req, res) => {
 }
 
 const show = (req, res) => {
-    db.Game.findById(req.params.id, (err, foundRecipe) => {
+    db.Recipe.findById(req.params.id, (err, foundRecipe) => {
         if (err) console.log('Error in Recipe Show:', err)
 
         if (!foundRecipe) return res.json({

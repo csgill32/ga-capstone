@@ -36,8 +36,35 @@ const create = (req, res) => {
     })
 }
 
+const update = (req, res) => {
+    const options = { new: true }
+    db.Recipe.findByIdAndUpdate(req.params.id, req.body, options, (err, updatedRecipe) => {
+        if (err) console.log('Error in Recipes#update:', err)
+        if (!updatedRecipe) return res.json({
+            message: "No Recipe with that ID found."
+        })
+
+        // Validations and error handling here
+
+        res.status(200).json({ recipe: updatedRecipe })
+    })
+}
+
+const destroy = (req, res) => {
+    db.Recipe.findByIdAndDelete(req.params.id, (err, deletedRecipe) => {
+        if (err) console.log('Error in Recipes#destroy:', err)
+        if (!deletedRecipe) return res.json({
+            message: "No Recipe with that ID found."
+        })
+
+        res.status(200).json({ recipe: deletedRecipe })
+    })
+}
+
 module.exports = {
     index,
     show,
     create,
+    update,
+    destroy
 }

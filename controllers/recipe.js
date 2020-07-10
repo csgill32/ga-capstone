@@ -44,7 +44,9 @@ const update = (req, res) => {
             message: "No Recipe with that ID found."
         })
 
-        // Validations and error handling here
+        if (!updatedRecipe) return res.json({
+            message: 'Error occurred while updating recipe.'
+        })
 
         res.status(200).json({ recipe: updatedRecipe })
     })
@@ -52,7 +54,7 @@ const update = (req, res) => {
 
 const destroy = (req, res) => {
     db.Recipe.findByIdAndDelete(req.params.id, (err, deletedRecipe) => {
-        if (err) console.log('Error in Recipes#destroy:', err)
+        if (err) console.log('Error in Recipes Destroy:', err)
         if (!deletedRecipe) return res.json({
             message: "No Recipe with that ID found."
         })
@@ -60,11 +62,40 @@ const destroy = (req, res) => {
         res.status(200).json({ recipe: deletedRecipe })
     })
 }
+// embedding ingredients
+const ingredients = async (req, res) => {
+    try {
+        const updateData = {
+            $push: {
+                ingredients: {
+                    name: req.body.name,
+                    quantity: req.body.quantity,
+                    measurement: req.body.measurement,
+                    // user: req.session.currentUser.id,
+                },
+            },
+        };
+        const updatedRecipe = await db.Recipe.findByIdAndUpdate(
+            req.params.id,
+            updateData,
+            { new: true }
+        );
+        console.log(updatedRecipe);
+        res.status(200).json({
+            status: 200,
+            message: "Ingredient Successfully Added",
+        })
+    } catch (error) {
+        console.log(error);
+        return res.json({ message: "Error adding ingredient" })
+    }
+}
 
 module.exports = {
     index,
     show,
     create,
     update,
-    destroy
+    destroy,
+    ingredients
 }

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const Ingredient = require('./Ingredient');
+const Ingredient = require('./Ingredient');
 
 const recipeSchema = new mongoose.Schema(
     {
@@ -9,7 +9,7 @@ const recipeSchema = new mongoose.Schema(
         //     type: mongoose.Schema.Types.ObjectId,
         //     ref: "User",
         // },
-        // ingredients: [Ingredient.schema],
+        ingredients: [Ingredient.schema],
     },
     { timestamps: true }
 );

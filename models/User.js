@@ -1,22 +1,17 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+// const Recipe = require('./Recipe')
 
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
-    },
-    password: { type: String, required: true, select: false },
-});
+// const userSchema = new mongoose.Schema({
+//     email: {
+//         type: String,
+//         required: true,
+//         unique: true,
+//         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+//     },
+//     password: { type: String, required: true, select: false },
+//     recipes: [Recipe.schema],
+// });
 
-userSchema.set("toJSON", {
-    transform: (doc, ret, opt) => {
-        delete ret["password"];
-        return ret;
-    },
-});
+// const User = mongoose.model("User", userSchema);
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+// module.exports = User;

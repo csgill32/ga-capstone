@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
         match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     },
     password: { type: String, required: true, select: false },
-    // recipes: [Recipe.schema],
+    recipes: [Recipe.schema],
 });
 
 const User = mongoose.model("User", userSchema);

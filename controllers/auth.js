@@ -29,9 +29,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const foundUser = await db.User.findOne({ email: req.body.email }).select(
-            "+password" // don't show the password
-        );
+        const foundUser = await db.User.findOne({ email: req.body.email }).select("+password");
         // check for registered email address
         if (!foundUser) {
             return res
@@ -46,7 +44,7 @@ const login = async (req, res) => {
                 id: foundUser._id,
             };
             return res
-                .status(201)
+                .status(200)
                 .json({ status: 200, message: "Login Successful", foundUser });
         } else {
             // the password provided does not match the password on file.
@@ -56,6 +54,7 @@ const login = async (req, res) => {
             });
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             status: 500,
             message: "Something went wrong. Please try again",
@@ -76,37 +75,18 @@ const profile = async (req, res) => {
     }
 };
 
-// embedding recipes
-// const recipes = async (req, res) => {
-//     try {
-//         const updateData = {
-//             $push: {
-//                 recipes: {
-//                     name: req.body.name,
-//                     directions: req.body.quantity,
-//                     user: req.session.currentUser.id,
-//                 },
-//             },
-//         };
-//         const updatedUser = await db.User.findByIdAndUpdate(
-//             req.params.id,
-//             updateData,
-//             { new: true }
-//         );
-//         console.log(updatedUser);
-//         res.status(200).json({
-//             status: 200,
-//             message: "Recipe Successfully Added",
-//         })
-//     } catch (error) {
-//         console.log(error);
-//         return res.json({ message: "Error adding recipe" })
-//     }
-// }
+// logout delete <- delete session
+const logout = async (req, res) => {
+    await req.session.destroy();
+    return res.status(200).json({
+        status: 200,
+        message: "Logout successful"
+    })
+};
 
 module.exports = {
     register,
     login,
     profile,
-    //     recipes
+    logout,
 };

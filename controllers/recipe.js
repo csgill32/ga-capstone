@@ -1,6 +1,7 @@
 const db = require('../models')
 
 const index = (req, res) => {
+    console.log(req.session)
     db.Recipe.find({ user: req.session.currentUser.id }, (err, foundRecipes) => {
         if (err) console.log('Error in Recipe Index:', err)
 
@@ -13,7 +14,7 @@ const index = (req, res) => {
 }
 
 const show = (req, res) => {
-    db.Recipe.findById(req.params.id).populate("user").exec(function (err, foundRecipe) {
+    db.Recipe.findById(req.params.id).populate("user", "-password").exec(function (err, foundRecipe) {
         if (err) console.log('Error in Recipe Show:', err)
 
         if (!foundRecipe) return res.json({
@@ -72,19 +73,13 @@ const destroy = (req, res) => {
 // const search = (req, res) => {
 //     db.Recipe.find({ name: { $regex: req.query.name, $options: "i" } }, function (error, foundRecipes) {
 //         if (error) {
-//             console.log(error);
-//             res.send({ message: "Internal server error." });
-//         } else {
-//             db.Ingredient.find({ name: { $regex: req.query.name, $options: "i" } }).populate("recipe").exec(function (error, foundIngredients) {
-//                 console.log(foundIngredients);
-//                 for (let i = 0; i < foundIngredients.length; i++) {
-//                     foundRecipes.push(foundIngredients[i].recipe);
-//                 }
-//                 const context = { recipes: foundRecipes, user: req.session.currentUser }
-//                 res.render("recipes/search", context);
-//             })
+//             console.log('Error in Search Recipes', error);
+//             if (!foundRecipes) return res.json({
+//                 message: "No recipe with that name found"
+//             });
 //         }
-//     });
+//         res.status(200).json({ recipes: foundRecipes, user: req.session.currentUser });
+//     })
 // };
 
 // embedding ingredients

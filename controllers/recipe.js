@@ -30,6 +30,7 @@ const create = (req, res) => {
         name: req.body.name,
         directions: req.body.directions,
         user: req.session.currentUser.id,
+        ingredients: req.body.ingredients,
     }
     db.Recipe.create(recipe, (err, savedRecipe) => {
         if (err) console.log('Error in Recipe Create:', err)
@@ -44,8 +45,9 @@ const create = (req, res) => {
 
 const update = (req, res) => {
     const options = { new: true }
+    console.log(req.body);
     db.Recipe.findByIdAndUpdate(req.params.id, req.body, options, (err, updatedRecipe) => {
-        if (err) console.log('Error in Recipes#update:', err)
+        if (err) console.log('Error in Recipes Update:', err)
         if (!updatedRecipe) return res.json({
             message: "No Recipe with that ID found."
         })

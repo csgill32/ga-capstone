@@ -19,7 +19,7 @@ app.use(cors({ credentials: true, origin: ["http://localhost:3000"] }));
 app.use(
     session({
         store: new MongoStore({
-            url: 'mongodb://localhost:27017/',
+            url: process.env.MONGODB_URI || 'mongodb://localhost:27017/',
         }),
         secret: "nosoupforyou",
         resave: false,

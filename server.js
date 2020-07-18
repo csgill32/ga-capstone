@@ -4,6 +4,8 @@ const cors = require('cors');
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 
+require("dotenv").config();
+
 const port = process.env.PORT || 3001
 
 // Instanced modules

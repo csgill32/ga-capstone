@@ -13,7 +13,7 @@ const app = express();
 
 // Middleware - JSON parsing
 app.use(express.json());
-app.use(cors({ credentials: true, origin: ["http://localhost:3000"] }));
+app.use(cors({ credentials: true, origin: ["https://recipebookcapstone.herokuapp.com"] }));
 // credentials - allows cookies/sessions
 // origin - allows requests from localhost3000 * will need to change once deployed
 
